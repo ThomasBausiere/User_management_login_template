@@ -1,0 +1,40 @@
+<div class="center-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h2 class="center-title">Connexion</h2>
+
+    <!-- Email field -->
+    <div class="content">
+      <label for="email">Email :</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        required
+        placeholder="Entrez votre email"
+      />
+    </div>
+
+    <!-- Password field -->
+    <div class="content">
+      <label for="password">Mot de passe :</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        required
+        placeholder="Entrez votre mot de passe"
+      />
+    </div>
+
+    <!-- Submit button -->
+    <div class="content">
+      <input type="submit" value="Se connecter" />
+    </div>
+
+    <!-- Link to sign up page -->
+    <a (click)="goToSignUpPage()">Inscription</a>
+
+    <!-- Error message display -->
+    <div *ngIf="errorMessage" id="message">{{ errorMessage }}</div>
+  </form>
+</div>

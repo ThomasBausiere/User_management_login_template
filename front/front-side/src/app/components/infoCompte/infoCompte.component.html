@@ -1,0 +1,29 @@
+<div class="info-compte-container">
+    <h2>Modifier les informations de mon compte</h2>
+  
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" formControlName="username" required>
+        <div *ngIf="userForm.controls['username'].invalid && userForm.controls['username'].touched">
+          Le nom d'utilisateur est requis.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" formControlName="email" required>
+        <div *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched">
+          Veuillez entrer un email valide.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <button type="submit" [disabled]="userForm.invalid">Mettre à jour</button>
+      </div>
+    </form>
+  
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </div>
+  
