@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class AuthService {
       }),
       catchError(error => {
         console.error('Erreur de connexion', error);
-        return of(false); // Gérer les erreurs en renvoyant false
+        return throwError(error); // Gérer les erreurs en renvoyant false
       })
     );
   }
@@ -51,4 +52,41 @@ export class AuthService {
       localStorage.removeItem('authToken');
     }
   }
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token); // Décoder le token
+        return decoded.userId; // Extraire l'ID utilisateur du token
+      } catch (error) {
+        console.error('Erreur lors du décodage du token JWT', error);
+        return null;
+      }
+    }
+    return null;
+  }
+  checkUsername(username: string) {
+    return this.http.get(`/api/users/check-username/${username}`, {
+      headers: { Authorization: `Bearer ${this.getToken()}` }
+    });
+  }
+  checkEmail(email: string) {
+    return this.http.get(`/api/users/check-email/${email}`, {
+      headers: { Authorization: `Bearer ${this.getToken()}` }
+    });
+  }
+  getUsername(): string | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token); // Décoder le token
+        return decoded.username || null; // Extraire le nom d'utilisateur
+      } catch (error) {
+        console.error('Erreur lors du décodage du token JWT', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
 }

@@ -1,7 +1,13 @@
 <div class="home-container">
-    <h1>Bienvenue sur la page d'accueil !</h1>
-    <a (click)="goToUpdatePage()">Informations du compte</a>
-    <button (click)="logout()">Se déconnecter</button>
 
-  </div>
-  
+
+<div class="welcome-message">
+  <h1>Bienvenue, {{ username }} !</h1>
+</div>
+
+<div class="menu-container">
+  <a (click)="goToUpdatePage()">Mon compte</a>
+  <button (click)="logout()">Se déconnecter</button>
+</div>
+
+</div>

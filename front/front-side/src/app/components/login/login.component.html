@@ -16,14 +16,18 @@
 
     <!-- Password field -->
     <div class="content">
-      <label for="password">Mot de passe :</label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        required
-        placeholder="Entrez votre mot de passe"
-      />
+      <div class="password-container">
+        
+        <label for="password">Mot de passe :</label>
+        <input [type]="showPassword ? 'text': 'password'"
+          id="password"
+          formControlName="password"
+          required
+          placeholder="Entrez votre mot de passe"
+        />
+      <button type="button" class="show-password-btn" [ngClass]="showPassword ? 'open' : 'closed'" (click)="togglePasswordVisibility()"></button>
+        
+      </div>
     </div>
 
     <!-- Submit button -->
@@ -32,9 +36,13 @@
     </div>
 
     <!-- Link to sign up page -->
-    <a (click)="goToSignUpPage()">Inscription</a>
+    <a class="route" (click)="goToSignUpPage()">Inscription</a>
 
     <!-- Error message display -->
-    <div *ngIf="errorMessage" id="message">{{ errorMessage }}</div>
+    
+    <div *ngIf="errorMessage" id="message" class="error-message">
+      {{ errorMessage }}
+    </div>
+
   </form>
 </div>

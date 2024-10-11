@@ -1,29 +1,54 @@
 <div class="info-compte-container">
-    <h2>Modifier les informations de mon compte</h2>
-  
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="username">Nom d'utilisateur :</label>
-        <input type="text" id="username" formControlName="username" required>
-        <div *ngIf="userForm.controls['username'].invalid && userForm.controls['username'].touched">
-          Le nom d'utilisateur est requis.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="email">Email :</label>
-        <input type="email" id="email" formControlName="email" required>
-        <div *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched">
-          Veuillez entrer un email valide.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <button type="submit" [disabled]="userForm.invalid">Mettre à jour</button>
-      </div>
-    </form>
-  
-    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <h2>Modifier les informations de mon compte</h2>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Nom d'utilisateur :</label>
+      <input type="text" id="username" formControlName="username" required>
+      <div *ngIf="usernameError" class="error-message">{{ usernameError }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="email" id="email" formControlName="email" required>
+      <div *ngIf="emailError" class="error-message">{{ emailError }}</div>
+    </div>
+
+  <!-- Champ Mot de passe -->
+    <div class="form-group password-container">
+      <label for="password">Nouveau mot de passe :</label>
+      <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password">
+    <button type="button" class="show-password-btn" [ngClass]="showPassword ? 'open' : 'closed'" (click)="togglePasswordVisibility()"></button>
+
+
+    </div>
+
+  <!-- Champ Confirmation de Mot de passe -->
+
+    <div class="form-group password-container">
+      <label for="confirmPassword">Confirmer le mot de passe :</label>
+      <input [type]="showPassword ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword">
+    <button type="button" class="show-password-btn" [ngClass]="showConfirmPassword ? 'open' : 'closed'" (click)="toggleConfirmPasswordVisibility()"></button>
+      
+    </div>
+
+
+    <div class="form-group">
+      <button type="submit" [disabled]="userForm.invalid || passwordMismatch || usernameError || emailError">Mettre à jour</button>
+    </div>
+  </form>
+
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="passwordMismatch && userForm.controls['confirmPassword'].touched">
+    <span class="error-message">Les mots de passe saisis ne correspondent pas.</span>
   </div>
-  
+  <div *ngIf="!passwordMismatch && userForm.controls['confirmPassword'].touched">
+    <span class="success-message">Les mots de passe saisis sont identiques.</span>
+  </div>
+  <div *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched">
+    Le mot de passe doit comporter au moins 6 caractères.
+  </div>
+  <!-- Ajout du bouton de retour -->
+  <button class="return-button" (click)="goBack()">Retour</button>
+</div>

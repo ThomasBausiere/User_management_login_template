@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
+  showPassword: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     // Crée le formulaire avec des validations basiques
@@ -24,9 +25,7 @@ export class LoginComponent {
   }
 
   // Méthode de gestion de la soumission du formulaire
-  onSubmit() {
-    console.log('test');
-    
+  onSubmit() { 
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       
@@ -34,12 +33,14 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe({
         next: (response) => {
           console.log('Login réussi', response);
-          // Redirection vers /home après un login réussi
           this.router.navigate(['/home']);
         },
         error: (err) => {
           console.error('Erreur de login', err);
-          this.errorMessage = 'Identifiants invalides. Veuillez réessayer.';
+          console.log(this.errorMessage);
+          this.errorMessage = err.error?.message || 'Identifiants invalides. Veuillez réessayer.';
+          // Effacer uniquement le champ du mot de passe
+          this.loginForm.patchValue({ password: '' });
         }
       });
     }
@@ -48,5 +49,8 @@ export class LoginComponent {
   // Redirection vers la page d'inscription
   goToSignUpPage() {
     this.router.navigate(['/signin']);
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

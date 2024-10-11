@@ -1,13 +1,6 @@
-*, ::before, ::after{
-    box-sizing: border-box;
-    margin:0;
-    margin:0;
-}
-
 body{
      height:100vh;
      width:100%;
-     background-color:bisque;
 }
 
 .center-container {
@@ -16,11 +9,11 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: rgba(48, 34, 34, 0.705);
+    background-color: var(--main-bg-color);
 }
 
 .center-title{
-    color: #c5c0bd;
+    color: var(--high-contast-text);
     text-align: center;
     margin-bottom: 1rem;
 }
@@ -32,30 +25,80 @@ body{
 }
 
 form {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color:var(--sub-bg-color);
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 label, a {
-    color: #c5c0bd;
+    color: var(--high-contast-text);
 }
+
 input{
-    color:black;
+    border: 1px solid var(--default-animed-ui-border-color);
+    background-color: var(--hover-solid-color);
 }
 
 input[type="submit"] {
-    background-color: #c5c0bd;
-    color: rgba(48, 34, 34, 0.705);
+    background-color: var(--hover-solid-color);
+    color: var(--low-contrast-text)1;
     padding: 10px 20px;
-    border: none;
+    border: 1px solid var(--default-animed-ui-border-color);
     border-radius: 5px;
-    cursor: pointer;
+    cursor: pointer;    
 }
 
 input[type="submit"]:hover {
-    background-color: rgba(48, 34, 34, 0.705);
-    color: #c5c0bd;
-    border: 1px solid #c5c0bd;
+    background-color: var(--hover-solid-color);
+    color:   var(--high-contrast-text);
+    border: 1px solid var(--hover-animed-ui-border-color);
 }
+
+button[type="submit"]{
+    cursor: pointer;
+}
+
+a.route{
+    cursor: pointer;
+    transform: translateX(50%);
+}
+
+.error-message {
+    color: var(--error-color);
+    max-width: fit-content;
+}
+
+.password-container {
+    position: relative;
+  }
+  
+  input[type="password"], input[type="text"] {
+    width: 100%;
+    padding-right: 40px; /* Pour faire de la place pour le bouton */
+  }
+  
+  .show-password-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .show-password-btn.open {
+    background-image: var(--svg-eye-open);
+    background-color: var(--hover-solid-color);
+  }
+  
+  .show-password-btn.closed {
+    background-image: var(--svg-eye-closed);
+    background-color: var(--hover-solid-color);
+  }
+  
